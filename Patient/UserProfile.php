@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once('../index_model.php');
+require_once('PatientLayout.php');
 $indObj = new IndexModel();
 $rs = $indObj->getUserInfoByUserName($_SESSION["UserName"]);
 while ($r = mysqli_fetch_assoc($rs)) {
@@ -11,23 +11,6 @@ while ($r = mysqli_fetch_assoc($rs)) {
     $blood = $r['Blood'];
     $address = $r['Address'];
     $password = $r['Password'];
-
-    // require_once('../index_model.php');
-    // $indObj = new IndexModel();
-    // $rs = $indObj->getUserInfoByUserName($_SESSION["UserName"]);
-    // while ($r = mysqli_fetch_assoc($rs)) {
-    //     $userName = $r['UserName'];
-    //     echo $userName;
-    // }
-
-
-    // echo  "welcome" . $_SESSION["UserName"];
-
-    // require_once('../index_model.php');
-    // $indObj = new IndexModel();
-    // $rs = $indObj->getUserInfoByUserName($_SESSION["UserName"]);
-    // while ($r = mysqli_fetch_assoc($rs)) {
-    // }
 ?>
 
     <!DOCTYPE html>
@@ -38,7 +21,7 @@ while ($r = mysqli_fetch_assoc($rs)) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" type="image/png" href="../assets/img/favicon.png">
         <title>
-            Patient Dashboard
+            User Profile
         </title>
         <!--     Fonts and icons     -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -52,71 +35,19 @@ while ($r = mysqli_fetch_assoc($rs)) {
     <body class="">
         <div class="wrapper">
             <div class="sidebar">
-                <div class="sidebar-wrapper">
-                    <div class="logo">
-                        <h5 class="simple-text logo-mini"> Hi, <?php echo $name ?></h5>
-
-
-                    </div>
-                    <ul class="nav">
-                        <li>
-                            <a href="./PatientDashboard.php">
-                                <i class="tim-icons icon-chart-pie-36"></i>
-                                <h5>Dashboard</h5>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./PatientInfrmation.php">
-                                <i class="fas fa-info"></i>
-                                <h5>Patient Information</h5>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="./UserProfile.php">
-                                <i class="tim-icons icon-single-02"></i>
-                                <h5>User Profile</h5>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                $PatientNavbar = new PatientNavbar();
+                $PatientNavbar->SidebarLayout(3);
+                ?>
             </div>
             <div class="main-panel">
-                <!-- Navbar -->
-                <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper">
-                            <div class="navbar-toggle d-inline">
-                                <button type="button" class="navbar-toggler">
-                                    <span class="navbar-toggler-bar bar1"></span>
-                                    <span class="navbar-toggler-bar bar2"></span>
-                                    <span class="navbar-toggler-bar bar3"></span>
-                                </button>
-                            </div>
-                            <h3 class="navbar-brand">Plasma Bank Management</h3>
-                        </div>
-                        <div class="collapse navbar-collapse" id="navigation">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="dropdown nav-item">
-                                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                        <div class="photo">
-                                            <img src="../assets/img/anime3.png" alt="Profile Photo">
-                                        </div>
-                                        <b class="caret d-none d-lg-block d-xl-block"></b>
-                                        <p class="d-lg-none">
-                                            Log out
-                                        </p>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-navbar">
-                                        <li class="nav-link"><a href="../logout.php" class="nav-item dropdown-item">Log
-                                                out</a></li>
-                                    </ul>
-                                </li>
-                                <li class="separator d-lg-none"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
 
+                <!-- Navbar -->
+                <?php
+                $PatientNavbar = new PatientNavbar();
+                $PatientNavbar->NavbarLayout();
+                ?>
+                <!-- End Navbar -->
 
 
 
@@ -163,16 +94,31 @@ while ($r = mysqli_fetch_assoc($rs)) {
                                                     <label> Blood Group</label>
                                                     <div class="col-md-12 pl-md-1">
                                                         <select class="select" id="Blood" name="Blood">
-                                                            <option value="<?php echo $blood ?>"><?php echo $blood ?> </option>
                                                             <option value="">Change your blood group </option>
-                                                            <option value="A+"> A+</option>
-                                                            <option value="A-"> A-</option>
-                                                            <option value="B+"> B+</option>
-                                                            <option value="B-"> B-</option>
-                                                            <option value="AB+"> AB+</option>
-                                                            <option value="AB-"> AB-</option>
-                                                            <option value="O+"> O+</option>
-                                                            <option value="O-"> O-</option>
+                                                            <option value="Apos" <?php if ($blood == "Apos") {
+                                                                                        echo "selected";
+                                                                                    } ?>> A+</option>
+                                                            <option value="Aneg" <?php if ($blood == "Aneg") {
+                                                                                        echo "selected";
+                                                                                    } ?>> A-</option>
+                                                            <option value="Bpos" <?php if ($blood == "Bpos") {
+                                                                                        echo "selected";
+                                                                                    } ?>> B+</option>
+                                                            <option value="Bneg" <?php if ($blood == "Bneg") {
+                                                                                        echo "selected";
+                                                                                    } ?>> B-</option>
+                                                            <option value="ABpos" <?php if ($blood == "ABpos") {
+                                                                                        echo "selected";
+                                                                                    } ?>> AB+</option>
+                                                            <option value="ABneg" <?php if ($blood == "ABneg") {
+                                                                                        echo "selected";
+                                                                                    } ?>> AB-</option>
+                                                            <option value="Opos" <?php if ($blood == "Opos") {
+                                                                                        echo "selected";
+                                                                                    } ?>> O+</option>
+                                                            <option value="Oneg" <?php if ($blood == "Oneg") {
+                                                                                        echo "selected";
+                                                                                    } ?>> O-</option>
                                                         </select>
                                                     </div>
                                                 </div>

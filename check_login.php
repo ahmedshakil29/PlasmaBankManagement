@@ -10,10 +10,8 @@ if ($rs == 0) {
 } else {
 	while ($d = mysqli_fetch_assoc($rs)) {
 		$_SESSION["UserName"] = $d['UserName'];
-		// $_SESSION["Password"] = $d['Password'];
-
-		// $_SESSION["UserID"] = $d['UserID'];
-		// $_SESSION["Name"] = $d['Name'];
+		$_SESSION["Name"] = $d['Name'];
+		$_SESSION["UserID"] = $d['UserID'];
 		header('Location: CheekUser.php');
 	}
 }
