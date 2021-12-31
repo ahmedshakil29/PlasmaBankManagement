@@ -1,0 +1,22 @@
+CREATE TABLE `users` (
+  `UserID` int(11) NOT NULL,
+  `UserName` varchar(100) NOT NULL,
+  `UserEmail` varchar(50) NOT NULL,
+  `Password` varchar(25) NOT NULL,
+  `Name`varchar(25) NOT NULL,
+  `Blood` varchar(25) NOT NULL,
+  `Phone` varchar(25) NOT NULL,
+  `Address` varchar(500) not NULL,  
+  `Picture` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`UserID`),
+  ADD UNIQUE KEY `UserName` (`UserName`);
+
+ALTER TABLE `users`
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+INSERT INTO `users` (`UserID`, `UserName`, `UserEmail`, `Password`, `Name`, `Blood`, `Phone`,  `Address` , `Picture`) VALUES
+('', 'c1', 'tahsinatasn2im@gmail.com', '1234','Tasnim','B+','01784285243' ,'Dhaka','');
