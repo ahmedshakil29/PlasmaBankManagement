@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2021 at 06:29 PM
+-- Generation Time: Dec 31, 2021 at 06:42 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -21,6 +21,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `plasma`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `ID` int(11) NOT NULL,
+  `RequestID` int(11) NOT NULL,
+  `SenderID` int(11) NOT NULL,
+  `ReceiverID` int(11) NOT NULL,
+  `Message` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `request`
+--
+
+CREATE TABLE `request` (
+  `ID` int(11) NOT NULL,
+  `RequestFrom` int(11) NOT NULL,
+  `RequestTo` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `Place` varchar(500) NOT NULL,
+  `Message` varchar(500) NOT NULL,
+  `IsAccepted` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -55,6 +85,21 @@ INSERT INTO `users` (`UserID`, `UserName`, `UserEmail`, `Password`, `Name`, `Blo
 --
 
 --
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `RequestID` (`RequestID`);
+
+--
+-- Indexes for table `request`
+--
+ALTER TABLE `request`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `RequestFrom` (`RequestFrom`),
+  ADD KEY `RequestTo` (`RequestTo`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -66,10 +111,39 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `request`
+--
+ALTER TABLE `request`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`RequestID`) REFERENCES `request` (`ID`);
+
+--
+-- Constraints for table `request`
+--
+ALTER TABLE `request`
+  ADD CONSTRAINT `request_ibfk_1` FOREIGN KEY (`RequestFrom`) REFERENCES `users` (`UserID`),
+  ADD CONSTRAINT `request_ibfk_2` FOREIGN KEY (`RequestTo`) REFERENCES `users` (`UserID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
